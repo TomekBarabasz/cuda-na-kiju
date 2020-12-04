@@ -1,8 +1,6 @@
-#include "cuda_runtime.h"
-#include "device_launch_parameters.h"
+#include <cuda.h>
 #include "cu-utils.h"
 #include "perf-measure.h"
-
 #include <chrono>
 #include <thread>
 

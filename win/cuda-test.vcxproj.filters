@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CudaCompile Include="..\src\add.cu" />
+    <CudaCompile Include="..\src\matrixAdd.cu" />
+    <CudaCompile Include="..\src\matrixMult.cu" />
+    <CudaCompile Include="..\src\misc.cu" />
+    <CudaCompile Include="..\src\shuffle.cu" />
+    <CudaCompile Include="..\src\sorting.cu" />
+    <CudaCompile Include="random.cu" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\cuda-test.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="include">
+      <UniqueIdentifier>{a07692e2-8f14-4324-a877-6a50ccda5150}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\include\cu-utils.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\perf-measure.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="cu_random.h">
+      <Filter>include</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

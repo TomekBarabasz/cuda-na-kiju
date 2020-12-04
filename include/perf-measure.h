@@ -19,7 +19,7 @@ public:
 #include <sstream>
 #include <windows.h>
     
-Measurements::Measurements()
+inline Measurements::Measurements()
 {
     LARGE_INTEGER li;
     if (!QueryPerformanceFrequency(&li))
