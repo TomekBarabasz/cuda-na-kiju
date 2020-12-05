@@ -4,6 +4,7 @@
 #include <random>
 #include <map>
 #include <functional>
+#include <algorithm>
 #include "cu-utils.h"
 #include "perf-measure.h"
 
@@ -113,14 +114,17 @@ __host__ void doMatrixAdd(int one_dim_size, int blockx, int blocky, int dimx, in
 	auto host_b = std::make_unique<T[]>(tot_size);
 	auto host_c = std::make_unique<T[]>(tot_size);
 
+	Measurements mm;
+	mm.start();
+	std::cout << "allocating device memory ...";
 	auto dev_a = cu_make_unique<T>(tot_size);
 	auto dev_b = cu_make_unique<T>(tot_size);
 	auto dev_c = cu_make_unique<T>(tot_size);
+	std::cout << " done " << mm.elapsed() << std::endl;
 
-	Measurements mm;
 	if (rng_on_device) {
 		mm.start();
-		std::cout << "start generating random numbers ...";
+		std::cout << "generating random numbers on gpu ...";
 		rng(dev_a.get(), tot_size);
 		rng(dev_b.get(), tot_size);
 		cu_device_synchronize();
@@ -128,13 +132,13 @@ __host__ void doMatrixAdd(int one_dim_size, int blockx, int blocky, int dimx, in
 	}
 	else {
 		mm.start();
-		std::cout << "start generating random numbers ...";
+		std::cout << "generating random numbers on cpu ...";
 		rng(host_a.get(), tot_size);
 		rng(host_b.get(), tot_size);
 		std::cout << " done " << mm.elapsed() << std::endl;
 
 		mm.start();
-		std::cout << "start copying data to device ...";
+		std::cout << "copying data to device ...";
 		cu_copy_to_device(host_b, dev_b, tot_size);
 		cu_copy_to_device(host_c, dev_c, tot_size);
 		cu_device_synchronize();
@@ -154,7 +158,7 @@ __host__ void doMatrixAdd(int one_dim_size, int blockx, int blocky, int dimx, in
 IRngGen* makeRndGen(const char* _gen_type)
 {
 	string gen_type(_gen_type);
-	std::transform(gen_type.begin(), gen_type.end(), gen_type.begin(), std::toupper);
+	std::transform(gen_type.begin(), gen_type.end(), gen_type.begin(), [](auto c) { return std::toupper(c);});
 	if (gen_type == "CPU") {
 		return new CpuRndGen();
 	}

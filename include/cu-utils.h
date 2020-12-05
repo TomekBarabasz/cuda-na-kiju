@@ -3,7 +3,8 @@
 #include <iostream>
 #include <functional>
 #include <string>
-#include "cuda_runtime.h"
+#include <memory>
+#include <cuda.h>
 
 using std::string;
 

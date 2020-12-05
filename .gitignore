@@ -1,2 +1,6 @@
 win/.vs/*
 win/x64/*
+linux/x64/*
+linux/cuda-test
+
+
